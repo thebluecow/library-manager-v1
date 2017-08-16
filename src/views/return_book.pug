@@ -1,0 +1,27 @@
+extends ./layout.pug
+
+block content
+	include ./partials/_nav.pug
+	
+	h1 Patron: Return Book
+	
+	include error
+	
+	p
+		strong Book Title: 
+		| #{loan.Book.title}
+	p
+		strong Loaned By: 
+		| #{loan.Patron.fullName}
+	p
+		strong Loaned On: 
+		| #{loan.loanedOn}
+	p
+		strong Return By: 
+		| #{loan.returnBy}
+	form(action="/loan/" + loan.id + "?_method=PUT", method="post")
+		p
+			label(for='returned_on') Returned on:
+			input#returned_on(type="text" name="returned_on", value=returned_on)
+		p
+			input(type='submit' id='return_book', value='Return Book')

@@ -1,0 +1,7 @@
+if(errors)
+  h2.errors &macr;\_(&#x30C4;)_/&macr;
+  h4.errors Oh no! This is certainly embarrassing. Your request returned an error.
+  ul.errors
+    each error in errors
+      li
+        =error.message

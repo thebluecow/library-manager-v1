@@ -1,0 +1,46 @@
+extends ./layout.pug
+
+block content
+	include ./partials/_nav.pug
+	
+	h1 Loans
+	p
+		a.button(href='/loan/new') Create New Loan
+	p
+		| Filters 
+		a(href='/loan') All
+		|  
+		a(href='/loan?filter=overdue') Overdue
+		|  
+		a(href='/loan?filter=checked_out') Checked Out
+	table
+		thead
+			tr
+				th Book
+				th Patron 
+				th Loaned on
+				th Return by 
+				th Returned on
+				th Action
+		tbody
+			each loan in loans
+				tr
+					td
+						a(href="/book/" + loan.book_id) #{loan.Book.title}
+					td
+						a(href='/patron/' + loan.patron_id) #{loan.Patron.fullName}
+					td #{loan.loanedOn}
+					td #{loan.returnBy}
+					if loan.returned_on
+						td #{loan.returnedOn}
+					else
+						td
+					td
+						if (loan.returned_on == null || loan.returned_on == 'undefined')
+							a.button(href='/loan/' + loan.id) Return Book
+							
+	p
+		if (offsets.prev)
+			a.paginate(href='/loan' + offsets.querystring + offsets.prevpage) << Prev
+		if (offsets.next)
+			a.paginate(href='/loan' + offsets.querystring + offsets.nextpage) Next >>
